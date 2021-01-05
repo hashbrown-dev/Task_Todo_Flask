@@ -55,9 +55,10 @@
 
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from config.blueprints import index_bp
 # from send_mail import send_mail
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__)
 
 ENV = 'production'
 
@@ -69,6 +70,8 @@ else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://mjrhmwafyhpsjc:d8a4604d6d8cd1d7544aa06831883708b67983cc9ed01de43067c6dc1d8eda88@ec2-52-22-135-159.compute-1.amazonaws.com:5432/d7ps0rj73nvblr'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+app.register_blueprint(index_bp)
 
 db = SQLAlchemy(app)
 
@@ -90,7 +93,7 @@ class Feedback(db.Model):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('/home/index')
 
 
 @app.route('/submit', methods=['POST'])
