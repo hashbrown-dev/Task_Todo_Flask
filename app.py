@@ -5,14 +5,14 @@ from config.models import Feedback, db
 
 app = Flask(__name__)
 
-ENV = 'dev'
+ENV = 'production'
 
 if ENV == 'dev':
     app.debug = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost/webtasks'
 else:
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://khzvpmtkdffnup:56d605f53b517d12446d92cf5a4b8df82ac0bd3b6d73476e58b49a2e73fd3442@ec2-54-197-34-207.compute-1.amazonaws.com:5432/d91kf548ftrtdj'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://mjrhmwafyhpsjc:d8a4604d6d8cd1d7544aa06831883708b67983cc9ed01de43067c6dc1d8eda88@ec2-52-22-135-159.compute-1.amazonaws.com:5432/d7ps0rj73nvblr'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
