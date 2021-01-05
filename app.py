@@ -108,7 +108,8 @@ def submit():
             db.session.add(data)
             db.session.commit()
             # send_mail(customer, dealer, rating, comments)
-            return render_template('dashboard.html')
+            # return render_template('./new_templates/dashboard.html')
+            return render_template('new_templates/dashboard.html')
         return render_template('index.html', message='You have already submitted feedback')
 
 
