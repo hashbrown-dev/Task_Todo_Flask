@@ -1,4 +1,4 @@
-from models.models import ToDoModel
+from config.models import ToDoModel
 
 
 class ToDoService:
