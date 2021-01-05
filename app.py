@@ -57,7 +57,7 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 # from send_mail import send_mail
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 ENV = 'production'
 
