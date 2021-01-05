@@ -93,7 +93,7 @@ class Feedback(db.Model):
 
 @app.route('/')
 def index():
-    return render_template('/home/index')
+    return render_template('base.html')
 
 
 @app.route('/submit', methods=['POST'])
