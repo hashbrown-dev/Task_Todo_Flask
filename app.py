@@ -60,7 +60,7 @@ from config.blueprints import index_bp
 
 app = Flask(__name__)
 
-ENV = 'production'
+ENV = 'dev'
 
 if ENV == 'dev':
     app.debug = True
@@ -105,15 +105,15 @@ def submit():
         comments = request.form['comments']
         # print(customer, dealer, rating, comments)
         if customer == '' or dealer == '':
-            return render_template('index.html', message='Please enter required fields')
+            return render_template('base.html', message='Please enter required fields')
         if db.session.query(Feedback).filter(Feedback.customer == customer).count() == 0:
             data = Feedback(customer, dealer, rating, comments)
             db.session.add(data)
             db.session.commit()
             # send_mail(customer, dealer, rating, comments)
             # return render_template('./new_templates/dashboard.html')
-            return render_template('new_templates/dashboard.html')
-        return render_template('index.html', message='You have already submitted feedback')
+            return render_template('dashboard.html')
+        return render_template('base.html', message='You have already submitted feedback')
 
 
 if __name__ == '__main__':
