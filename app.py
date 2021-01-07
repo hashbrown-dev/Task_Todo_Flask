@@ -93,7 +93,20 @@ class Feedback(db.Model):
 
 @app.route('/')
 def index():
-    return render_template('base.html')
+    context = {
+        'userName': 'Harsh Gandhi',
+    }
+    return render_template('dashboard.html', context=context)
+
+
+@app.route('/tasks')
+def tasks():
+    return render_template('tasks.html')
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 
 @app.route('/submit', methods=['POST'])

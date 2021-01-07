@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-</head>
-<body>
-    <h1>welcome to the dashboard.</h1>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1>Welcome {{ context.userName }}</h1>
+        <p class="lead">This is a simple task management web app. This is on it's initial level and several new features will be added to it later on. <strong>Stay Tuned!</strong> </p>
+    </div>
+{% endblock %}
