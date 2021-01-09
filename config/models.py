@@ -18,8 +18,23 @@ class Feedback(db.Model):
         self.comments = comments
 
 
-class user(db.Model):
+class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     user_name = db.Column(db.String(200), unique=True)
     password = db.Column(db.String(200))
+    pin = db.Column(db.Integer)
+
+    def __init__(self, user_name, password, pin):
+        self.user_name = user_name
+        self.password = password
+        self.pin = pin
+
+
+class Car(db.Model):
+    __tablename__ = 'car'
+    id = db.Column(db.Integer, primary_key=True)
+    car_name = db.Column(db.String(200))
+
+    def __init__(self, car_name):
+        self.car_name = car_name

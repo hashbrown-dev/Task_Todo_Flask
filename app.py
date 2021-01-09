@@ -53,14 +53,24 @@
 # if __name__ == '__main__':
 #     app.run(debug=True)
 
-from flask import Flask, render_template, request
+import os
+import time
+from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_login import LoginManager, login_user, current_user, logout_user
+from flask_socketio import SocketIO, join_room, leave_room, send
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
 from config.blueprints import index_bp
+from config.models import db, Feedback, User
 # from send_mail import send_mail
 
 app = Flask(__name__)
 
-ENV = 'dev'
+app.secret_key = 'secret'
+app.config['WTF_CSRF_SECRET_KEY'] = "b'f\xfa\x8b{X\x8b\x9eM\x83l\x19\xad\x84\x08\xaa"
+
+ENV = 'prod'
 
 if ENV == 'dev':
     app.debug = True
@@ -71,32 +81,49 @@ else:
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+db.init_app(app)
+
+login = LoginManager(app)
+login.init_app(app)
+
+migrate = Migrate(app, db)
+
 app.register_blueprint(index_bp)
 
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
+#
+#
+# class Feedback(db.Model):
+#     __tablename__ = 'feedback'
+#     id = db.Column(db.Integer, primary_key=True)
+#     customer = db.Column(db.String(200), unique=True)
+#     dealer = db.Column(db.String(200))
+#     rating = db.Column(db.Integer)
+#     comments = db.Column(db.Text())
+#
+#     def __init__(self, customer, dealer, rating, comments):
+#         self.customer = customer
+#         self.dealer = dealer
+#         self.rating = rating
+#         self.comments = comments
 
 
-class Feedback(db.Model):
-    __tablename__ = 'feedback'
-    id = db.Column(db.Integer, primary_key=True)
-    customer = db.Column(db.String(200), unique=True)
-    dealer = db.Column(db.String(200))
-    rating = db.Column(db.Integer)
-    comments = db.Column(db.Text())
-
-    def __init__(self, customer, dealer, rating, comments):
-        self.customer = customer
-        self.dealer = dealer
-        self.rating = rating
-        self.comments = comments
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 
 @app.route('/')
 def index():
+    return render_template('login.html')
+
+
+@app.route('/login')
+def login():
     context = {
         'userName': 'Harsh Gandhi',
     }
-    return render_template('dashboard.html', context=context)
+    return render_template('dashboard.html',  context=context)
 
 
 @app.route('/tasks')
